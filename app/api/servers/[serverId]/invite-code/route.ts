@@ -20,10 +20,10 @@ export async function PATCH(
         const server =await db.server.update({
             where:{
                 id:params.serverId,
-                profileId:profile.id,
+                profileId:profile.id, //Only admin can invite users
             },
             data:{
-                inviteCode:uuidv4()
+                inviteCode:uuidv4() 
 
             }
         });
