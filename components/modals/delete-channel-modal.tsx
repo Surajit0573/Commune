@@ -17,7 +17,7 @@ import qs from "query-string";
 
 
 export const DeleteChannelModal = () => {
-    const { isOpen, onClose, type, data, onOpen } = useModal();
+    const { isOpen, onClose, type, data } = useModal();
     const isModalOpen = isOpen && type === "deleteChannel";
     const { server,channel } = data;
     const [isLoading, setIsLoading] = useState(false);

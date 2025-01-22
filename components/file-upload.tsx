@@ -1,6 +1,6 @@
 "use client"
 import { UploadDropzone } from "@/lib/uploadthing"
-import { error } from "console"
+// import { error } from "console"
 import { FileIcon, X } from "lucide-react"
 import Image from "next/image"
 

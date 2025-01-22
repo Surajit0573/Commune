@@ -8,7 +8,7 @@ import qs from "query-string"
 
 import { Form,FormControl,FormField,FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus, Smile } from "lucide-react";
+import { Plus} from "lucide-react";
 import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
 import { EmojiPicker } from "@/components/emoji-picker";
