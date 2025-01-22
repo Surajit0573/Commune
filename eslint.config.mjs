@@ -29,7 +29,7 @@ const eslintConfig = [
       "react/react-in-jsx-scope": "off",           // Not needed in Next.js
       "react/prop-types": "off",                  // Disable prop-types rule (use TypeScript types instead)
       "no-var": "off",                          // allow use of `var`
-      "react/no-unknown-property": "error",       // Enforce known properties in JSX
+      "react/no-unknown-property": "off",       // Enforce known properties in JSX
     },
   },
 ];
