@@ -22,10 +22,14 @@ const eslintConfig = [
   {
     rules: {
       // Customize specific rules as needed
-      "import/no-anonymous-default-export": "warn", // Warn on anonymous default exports
+      "import/no-anonymous-default-export": ["warn", { allowArrowFunction: true }], // Allow arrow functions for default exports
       "react/display-name": "warn",                // Warn if display name is missing
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }], // Ignore unused variables prefixed with _
+      "@typescript-eslint/no-explicit-any": "error", // Disallow usage of `any`
       "react/react-in-jsx-scope": "off",           // Not needed in Next.js
+      "react/prop-types": "off",                  // Disable prop-types rule (use TypeScript types instead)
+      "no-var": "off",                          // allow use of `var`
+      "react/no-unknown-property": "error",       // Enforce known properties in JSX
     },
   },
 ];
