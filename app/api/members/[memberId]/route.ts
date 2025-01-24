@@ -2,10 +2,10 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function DELETE(req:Request,{ params }: { params: { memberId: string } }) {
+export async function DELETE(req:Request,{ params }: { params: Promise<{ memberId: string }> }) {
     try {
         const profile=await currentProfile();
-
+        const {memberId}=await params;
         const {searchParams}=new URL(req.url);
         const serverId=searchParams.get("serverId");
 
@@ -17,7 +17,7 @@ export async function DELETE(req:Request,{ params }: { params: { memberId: strin
             return new NextResponse("Server ID Missing",{status:400});
         }
 
-        if(!params.memberId){
+        if(!memberId){
             return new NextResponse("Member ID Missing",{status:400});
         }
 
@@ -29,7 +29,7 @@ export async function DELETE(req:Request,{ params }: { params: { memberId: strin
             data:{
                 members:{
                     deleteMany:{
-                            id:params.memberId,
+                            id:memberId,
                             profileId:{
                                 not:profile.id //can't delete admin
                             }
@@ -58,10 +58,10 @@ export async function DELETE(req:Request,{ params }: { params: { memberId: strin
 
 
 
-export async function PATCH(req:Request,{ params }: { params: { memberId: string } }) {
+export async function PATCH(req:Request,{ params }: { params: Promise<{ memberId: string }> }) {
     try {
         const profile=await currentProfile();
-
+        const {memberId}=await params;
         const {searchParams}=new URL(req.url);
         const {role}=await req.json();
 
@@ -75,7 +75,7 @@ export async function PATCH(req:Request,{ params }: { params: { memberId: string
             return new NextResponse("Server ID Missing",{status:400});
         }
 
-        if(!params.memberId){
+        if(!memberId){
             return new NextResponse("Member ID Missing",{status:400});
         }
 
@@ -88,7 +88,7 @@ export async function PATCH(req:Request,{ params }: { params: { memberId: string
                 members:{
                     update:{
                         where:{
-                            id:params.memberId,
+                            id:memberId,
                             profileId:{
                                 not:profile.id //can't change admin's role
                             }

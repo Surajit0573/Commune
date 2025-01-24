@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request, {
-        params }: { params: { serverId: string } }) {
+        params }: { params: Promise<{ serverId: string }> }) {
     try {
-
+        const {serverId}=await params;
         const profile = await currentProfile();
         const { name, imageUrl } = await req.json();
         if (!profile) {
@@ -15,7 +15,7 @@ export async function PATCH(
 
         const server = await db.server.update({
             where: {
-                id: params.serverId,
+                id: serverId,
                 profileId: profile.id // only a admin can modify server settings
             },
             data: {
@@ -32,9 +32,9 @@ export async function PATCH(
 
 export async function DELETE(
     req: Request, {
-        params }: { params: { serverId: string } }) {
+        params }: { params: Promise<{ serverId: string }> }) {
     try {
-
+        const {serverId}=await params;
         const profile = await currentProfile();
 
         if (!profile) {
@@ -43,7 +43,7 @@ export async function DELETE(
 
         const server = await db.server.delete({
             where: {
-                id: params.serverId,
+                id: serverId,
                 profileId: profile.id // only a admin can delete a server
             }
         })
