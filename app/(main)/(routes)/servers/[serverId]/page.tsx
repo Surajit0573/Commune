@@ -2,12 +2,8 @@ import { currentProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-interface ServerIdPageProps {
-    params: {
-        serverId: string
-    }
-}
-export default async ({ params }: ServerIdPageProps) => {
+export default async ({params}: {params:Promise<{serverId: string}>}) => {
+    const {serverId}=await params;
 
     const profile = await currentProfile();
     if (!profile) {
@@ -15,7 +11,7 @@ export default async ({ params }: ServerIdPageProps) => {
     }
     const server = await db.server.findUnique({
         where: {
-            id: params.serverId,
+            id: serverId,
             members: {
                 some: {
                     profileId: profile.id
@@ -37,5 +33,5 @@ export default async ({ params }: ServerIdPageProps) => {
     if (initialChannel?.name !== "general") {
         return null;
     }
-    return redirect(`/servers/${params.serverId}/channels/${initialChannel?.id}`)
+    return redirect(`/servers/${serverId}/channels/${initialChannel?.id}`)
 }

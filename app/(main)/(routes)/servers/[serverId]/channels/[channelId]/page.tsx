@@ -7,14 +7,9 @@ import { db } from "@/lib/db";
 import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-interface ChannelIdPageProps {
-    params: {
-        serverId: string,
-        channelId: string
-    }
-}
+export default async ({params}: {params:Promise<{serverId: string,channelId: string}>}) => {
 
-export default async ({ params }: ChannelIdPageProps) => {
+    const {serverId,channelId}=await params;
 
     const profile = await currentProfile();
     if (!profile) {
@@ -23,13 +18,13 @@ export default async ({ params }: ChannelIdPageProps) => {
 
     const channel = await db.channel.findUnique({
         where: {
-            id: params.channelId
+            id: channelId
         }
     })
 
     const member = await db.member.findFirst({
         where: {
-            serverId: params.serverId,
+            serverId: serverId,
             profileId: profile.id
         },
     })
