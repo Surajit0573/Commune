@@ -8,23 +8,23 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface MemberIdPageProps {
-    params: {
+    params: Promise<{
         memberId: string;
         serverId: string;
-    },
+    }>,
     searchParams: {
         video?: boolean
     }
 }
 export default async ({ params, searchParams }: MemberIdPageProps) => {
-
+    const {memberId,serverId}=await params;
     const profile = await currentProfile();
     if (!profile) {
         return redirect("/");
     }
     const currentMember = await db.member.findFirst({
         where: {
-            serverId: params.serverId,
+            serverId: serverId,
             profileId: profile.id,
         },
         include: {
@@ -36,10 +36,10 @@ export default async ({ params, searchParams }: MemberIdPageProps) => {
         return redirect("/");
     }
 
-    const conversation = await getOrCreateConversation(currentMember.id, params.memberId);
+    const conversation = await getOrCreateConversation(currentMember.id,memberId);
 
     if (!conversation) {
-        return redirect(`/servers/${params.serverId}`)
+        return redirect(`/servers/${serverId}`)
     }
 
     const { memberOne, memberTwo } = conversation;
@@ -49,7 +49,7 @@ export default async ({ params, searchParams }: MemberIdPageProps) => {
             <ChatHeader
                 imageUrl={otherMember.profile.imageUrl}
                 name={otherMember.profile.name}
-                serverId={params.serverId}
+                serverId={serverId}
                 type="conversation"
             />
 
