@@ -89,8 +89,11 @@ CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
 const CommandGroup = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group> & {
+    children?: React.ReactNode;
+    heading?: string;
+  }
+>(({ className, children, heading, ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
@@ -99,9 +102,15 @@ const CommandGroup = React.forwardRef<
     )}
     {...props}
   >
+    {heading && (
+      <div className="[cmdk-group-heading] px-2 py-1.5 text-xs font-medium text-muted-foreground">
+        {heading}
+      </div>
+    )}
     {children}
   </CommandPrimitive.Group>
 ));
+
 
 CommandGroup.displayName = CommandPrimitive.Group.displayName
 
