@@ -10,8 +10,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive>
+>(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
     className={cn(
@@ -19,9 +19,7 @@ const Command = React.forwardRef<
       className
     )}
     {...props}
-  >
-    {children}
-  </CommandPrimitive>
+  />
 ))
 Command.displayName = CommandPrimitive.displayName
 
@@ -55,6 +53,7 @@ const CommandInput = React.forwardRef<
   </div>
 ));
 
+
 CommandInput.displayName = CommandPrimitive.Input.displayName
 
 const CommandList = React.forwardRef<
@@ -85,6 +84,7 @@ const CommandEmpty = React.forwardRef<
   </CommandPrimitive.Empty>
 ));
 
+
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
 const CommandGroup = React.forwardRef<
@@ -103,11 +103,12 @@ const CommandGroup = React.forwardRef<
   </CommandPrimitive.Group>
 ));
 
+
 CommandGroup.displayName = CommandPrimitive.Group.displayName
 
 const CommandSeparator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator> & { children?: React.ReactNode }
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
@@ -119,8 +120,8 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 
 const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+>(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
@@ -128,9 +129,7 @@ const CommandItem = React.forwardRef<
       className
     )}
     {...props}
-  >
-    {children}
-  </CommandPrimitive.Item>
+  />
 ))
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
