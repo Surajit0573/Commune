@@ -63,7 +63,7 @@ export default async ({ params, searchParams }: MemberIdPageProps) => {
 
             )}
 
-            {video && (
+            {!video && (
                 <>
                     <ChatMessage
                         member={currentMember}
