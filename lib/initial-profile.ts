@@ -10,15 +10,16 @@ export const initialProfile = async () => {
     if (!user) {
         redirect("/sign-in");
     }
+    if (db.profile) {
+        const profile = await db.profile.findUnique({
+            where: {
+                userId: user.id
+            }
+        });
 
-    const profile = await db.profile.findUnique({
-        where: {
-            userId: user.id
+        if (profile) {
+            return profile;
         }
-    });
-
-    if (profile) {
-        return profile;
     }
 
     const newProfile = await db.profile.create({
