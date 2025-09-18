@@ -1,8 +1,6 @@
-
 import { currentUser } from "@clerk/nextjs/server"
 import { db } from "./db"
 import { redirect } from "next/navigation";
-
 
 export const initialProfile = async () => {
     const user = await currentUser();
@@ -10,18 +8,19 @@ export const initialProfile = async () => {
     if (!user) {
         redirect("/sign-in");
     }
-    if (db.profile) {
-        const profile = await db.profile.findUnique({
-            where: {
-                userId: user.id
-            }
-        });
 
-        if (profile) {
-            return profile;
+    // Check if profile already exists
+    const profile = await db.profile.findUnique({
+        where: {
+            userId: user.id
         }
+    });
+
+    if (profile) {
+        return profile;
     }
 
+    // Create new profile if it doesn't exist
     const newProfile = await db.profile.create({
         data: {
             userId: user.id,
@@ -29,7 +28,7 @@ export const initialProfile = async () => {
             imageUrl: user.imageUrl,
             email: user.emailAddresses[0].emailAddress
         }
-    })
+    });
 
     return newProfile;
 }
